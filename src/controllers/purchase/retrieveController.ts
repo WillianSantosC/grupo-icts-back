@@ -5,13 +5,15 @@ const retrievePurchases = async (_: Request, res: Response) => {
   const purchases: PurchaseProps[] =
     await new PurchaseRepo().retrievePurchases();
 
-  const purchasesWithProducts = [];
+  for (const purchase of purchases) {
+    const total = purchase.products.reduce(
+      (acc, value) => acc + value.preco,
+      0
+    );
+    purchase.total = total;
+  }
 
-  purchases.forEach((purchase) =>
-    purchasesWithProducts.push({ products: purchase?.products })
-  );
-
-  res.status(200).json(purchasesWithProducts);
+  res.status(200).json(purchases);
 };
 
 export default retrievePurchases;

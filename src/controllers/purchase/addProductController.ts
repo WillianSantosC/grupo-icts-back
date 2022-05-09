@@ -15,11 +15,9 @@ const addProduct = async (req: Request, res: Response) => {
     req.validated
   );
 
-  purchase.products = [product];
+  purchase.products = [...purchase.products, product];
 
   await new PurchaseRepo().savePurchase(purchase);
-
-  console.log(purchase.products);
 
   res.status(200).json({ msg: 'Produto adicionado a compra' });
 };

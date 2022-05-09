@@ -25,7 +25,7 @@ export class Purchase {
   @Column()
   status: string;
 
-  @ManyToMany((type) => Product)
+  @ManyToMany((type) => Product, { eager: true })
   @JoinTable()
   products: Product[];
 }
